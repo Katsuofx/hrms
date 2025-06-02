@@ -338,7 +338,7 @@
   </div>
 
   <script>
-    const pages = document.querySelectorAll(".form-page");
+    /* const pages = document.querySelectorAll(".form-page"); */
     let currentPage = 0;
 
     function showPage(index) {
