@@ -8,11 +8,10 @@
     .form-step {
       display: none;
       flex-direction: column;
-      gap: 20px;
-      margin-bottom: 32px;
       background: #fff;
       border-radius: 16px;
-      padding: 32px;
+      padding: 20px 32px 20px 32px;
+      margin-bottom: 0;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     }
 
@@ -21,10 +20,33 @@
       animation: fadeIn 0.3s;
     }
 
+    table.rounded-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    table.rounded-table th,
+    table.rounded-table td {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    table.rounded-table th {
+      background-color: #f9f9f9;
+    }
+
+    table.rounded-table tr:last-child td {
+      border-bottom: none;
+    }
+
     .main-title {
       font-size: 2.2rem;
       font-weight: bold;
-      text-align: center;
+      text-align: left;
       color: #222;
       margin: 0;
     }
@@ -47,7 +69,9 @@
       font-size: 1.2rem;
       font-weight: bold;
       color: #222;
-
+      padding: 0;
+      margin: 0;
+      margin-top: 30px;
     }
 
     .subsection-title {
@@ -79,6 +103,16 @@
     }
 
     .input {
+      padding: 10px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #fafbfc;
+      transition: border 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .input-children {
       padding: 10px;
       border: 1px solid #bbb;
       border-radius: 6px;
@@ -159,6 +193,117 @@
       color: #0509A9DB;
       border: 2px solid #0509A9DB;
     }
+
+    .row-addchild {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .open-addchild-modal {
+      padding: 5px;
+      padding-bottom: 5px;
+      margin: 0;
+      background-color: darkgreen;
+      color: white;
+      font-weight: 600;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .close {
+      float: right;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    #childName, #childAge, .educationInputs {
+      width: 95%;
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+
+    .modal-content label {
+      font-family: "Roboto", sans-serif;
+      font-size: 15px;
+    }
+
+    .modal-button {
+      display: flex;
+      justify-content: right;
+    }
+
+    .modal-button button {
+      background-color: darkgreen;
+      color: white;
+      padding: 5px 10px;
+      font-weight: 600;
+    }
+    
+    .btn-group {
+      margin-top: 20px;
+    }
+
+    #pds-form {
+      margin-top: 10px;
+    }
+
+    .custom-modal {
+      display: none; 
+      position: fixed; 
+      z-index: 9999; 
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto; 
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .custom-modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 5px;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    }
+
+    .close-button {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
 
     @keyframes fadeIn {
       from {
