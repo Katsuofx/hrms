@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2025 at 06:37 PM
+-- Generation Time: Jun 03, 2025 at 08:16 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.1
 
@@ -59,6 +59,18 @@ CREATE TABLE `children` (
   `age` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `children`
+--
+
+INSERT INTO `children` (`id`, `personnel_id`, `name`, `age`) VALUES
+(5, 5, 'wdawdsad2', 323),
+(6, 5, 'wdadw', 12),
+(7, 6, 'sefse', 323),
+(8, 6, 'fe', 32),
+(9, 6, '12312', 23),
+(10, 6, 'dadawd', 23);
+
 -- --------------------------------------------------------
 
 --
@@ -100,35 +112,13 @@ INSERT INTO `civilstatus` (`id`, `name`) VALUES
 CREATE TABLE `education` (
   `id` int(11) NOT NULL,
   `personnel_id` int(11) DEFAULT NULL,
-  `educationlevels_id` int(11) DEFAULT NULL,
+  `educationlevels` varchar(100) DEFAULT NULL,
   `school_name` varchar(100) DEFAULT NULL,
   `attendance_dates` varchar(100) DEFAULT NULL,
   `degree_earned` varchar(100) DEFAULT NULL,
   `units_or_course` varchar(100) DEFAULT NULL,
   `honors_received` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `educationlevels`
---
-
-CREATE TABLE `educationlevels` (
-  `id` int(11) NOT NULL,
-  `educ` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `educationlevels`
---
-
-INSERT INTO `educationlevels` (`id`, `educ`) VALUES
-(1, 'Elementary'),
-(2, 'Secondary'),
-(3, 'Vocational'),
-(4, 'College'),
-(5, 'Post Graduate');
 
 -- --------------------------------------------------------
 
@@ -437,12 +427,20 @@ INSERT INTO `nationalities_list` (`id`, `nationalities`) VALUES
 CREATE TABLE `parents` (
   `id` int(11) NOT NULL,
   `personnel_id` int(11) DEFAULT NULL,
-  `type` enum('father','mother') DEFAULT NULL,
+  `type` varchar(30) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `middle_name` varchar(50) DEFAULT NULL,
   `place_of_birth` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `parents`
+--
+
+INSERT INTO `parents` (`id`, `personnel_id`, `type`, `last_name`, `first_name`, `middle_name`, `place_of_birth`) VALUES
+(1, 6, 'Father', 'sefsef', 'fsefsef', 'sefse', 'esfsef'),
+(2, 6, 'Mother', 'sefse', 'fsef', 'sefsef', 'sefse');
 
 -- --------------------------------------------------------
 
@@ -479,7 +477,8 @@ CREATE TABLE `personnel` (
 --
 
 INSERT INTO `personnel` (`id`, `last_name`, `first_name`, `middle_name`, `birthplace`, `birthdate`, `religion_id`, `bloodtype_id`, `civilstatus_id`, `gender_id`, `nationality_id`, `tin_no`, `sss_no`, `pagibig_no`, `address`, `tel_no`, `cellphone_no`, `email`, `date_employed`, `img_path`, `status_id`) VALUES
-(1, 'wadawd', 'awdawd', 'awdawdaw', 'adwa', '2000-02-09', 16, 1, 2, 4, 13, 'awd', 'awdawd', 'awdaw', 'awdawd', 'awda', 'daw', 'dawdawd@gmail.com', '2025-03-05', '../assets/personnel-photos/1748954790_375025795_614028287309425_6665788162935722182_n.jpg', 1);
+(5, 'dawda', 'wdawd', 'awdaw', 'awdawdaw', '2000-02-09', 17, 5, 3, 3, 12, 'sasda', 'wda', 'awadsa', 'adawd', 'awdwdaw', 'daw', 'dawdad', '2000-02-09', '../assets/personnel-photos/1748969950_375025795_614028287309425_6665788162935722182_n.jpg', 1),
+(6, 'awda', 'wdawd', 'awdawd', 'dawda', '2000-02-09', 7, 6, 2, 7, 12, 'efse', 'fsef', 'sefse', 'esfs', 'fsef', 'sef', 'sefsef', '2025-06-04', '../assets/personnel-photos/1748970057_375025795_614028287309425_6665788162935722182_n.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -541,6 +540,14 @@ CREATE TABLE `spouse` (
   `company_name` varchar(100) DEFAULT NULL,
   `company_address` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `spouse`
+--
+
+INSERT INTO `spouse` (`id`, `personnel_id`, `last_name`, `first_name`, `middle_name`, `occupation`, `company_name`, `company_address`) VALUES
+(4, 5, 'sdaw', 'da', 'awd', 'dawdawd', 'awdaw', 'awd'),
+(5, 6, 'sefse', 'fse', 'fsef', 'efs', 'efsefsef', 'sefs');
 
 -- --------------------------------------------------------
 
@@ -644,13 +651,7 @@ ALTER TABLE `civilstatus`
 ALTER TABLE `education`
   ADD PRIMARY KEY (`id`),
   ADD KEY `personnel_id` (`personnel_id`),
-  ADD KEY `educationlevels_id` (`educationlevels_id`);
-
---
--- Indexes for table `educationlevels`
---
-ALTER TABLE `educationlevels`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `educationlevels_id` (`educationlevels`);
 
 --
 -- Indexes for table `eligibility`
@@ -757,7 +758,7 @@ ALTER TABLE `bloodtype`
 -- AUTO_INCREMENT for table `children`
 --
 ALTER TABLE `children`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `citizenship`
@@ -776,12 +777,6 @@ ALTER TABLE `civilstatus`
 --
 ALTER TABLE `education`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `educationlevels`
---
-ALTER TABLE `educationlevels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `eligibility`
@@ -817,13 +812,13 @@ ALTER TABLE `nationalities_list`
 -- AUTO_INCREMENT for table `parents`
 --
 ALTER TABLE `parents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personnel`
 --
 ALTER TABLE `personnel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `religion`
@@ -835,7 +830,7 @@ ALTER TABLE `religion`
 -- AUTO_INCREMENT for table `spouse`
 --
 ALTER TABLE `spouse`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -875,8 +870,7 @@ ALTER TABLE `children`
 -- Constraints for table `education`
 --
 ALTER TABLE `education`
-  ADD CONSTRAINT `education_ibfk_1` FOREIGN KEY (`personnel_id`) REFERENCES `personnel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `education_ibfk_2` FOREIGN KEY (`educationlevels_id`) REFERENCES `educationlevels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `education_ibfk_1` FOREIGN KEY (`personnel_id`) REFERENCES `personnel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `eligibility`
