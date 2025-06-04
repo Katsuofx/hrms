@@ -488,4 +488,96 @@
     display: none;
   }
 
-    
+  .dashboard-boxes-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+    justify-content: space-between;
+    margin-bottom: 100px;
+}
+
+.dashboard-boxes1 {
+    height: 100px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    background: #2e2ea7;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .2); /* Shadow on all sides */
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.dashboard-boxes1:hover {
+    background: #3d3db3;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .2); /* Shadow on all sides */
+}
+
+.dashboard-boxes2 {
+    height: 100px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    background: #ffffff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .2); /* Shadow on all sides */
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.dashboard-boxes2:hover {
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .2); /* Shadow on all sides */
+}
+
+.dashboard-boxes3 {
+    height: 100px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    background: #ffffff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .2); /* Shadow on all sides */
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.dashboard-boxes3:hover {
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .2); /* Shadow on all sides */
+}
+
+
+.dashboard-boxes-header {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    text-align: center;
+}
+
+.dashboard-boxes-result {
+    margin: 0;
+    color: #fff;
+    padding-top: 20px;
+    font-size: 40px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    text-align: center;
+}
+
+.dashboard-boxes-result-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.dashboard-boxes-result-div i {
+    font-size: 100px;
+    color: #8f3a8f;
+}

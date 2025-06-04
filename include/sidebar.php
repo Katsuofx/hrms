@@ -27,11 +27,6 @@
         <i class="fa-solid fa-id-card-clip"></i>
         <span class="nav-text">Employees</span>
     </a>
-
-    <a href="#" class="nav-item nav-link" data-page="employee-info">
-        <i class="fa-solid fa-id-card-clip"></i>
-        <span class="nav-text">Details</span>
-    </a>
     
     <a href="#" class="nav-item nav-link" data-page="certificate">
         <i class="fa-solid fa-certificate"></i>
