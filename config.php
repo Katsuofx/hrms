@@ -12,7 +12,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // hello world nauawa ka
+    // hello world nauawa ka asdasdas
 ?>
 
 
