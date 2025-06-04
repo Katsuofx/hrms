@@ -52,6 +52,14 @@
       margin-top: 20px;
     }
 
+    .main-title-employee {
+      font-size: 2.2rem;
+      font-weight: bold;
+      text-align: left;
+      color: #222;
+      margin: 0 !important;
+    }
+
     .step-title {
       font-size: 1.5rem;
       font-weight: bold;
