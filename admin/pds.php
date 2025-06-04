@@ -18,6 +18,16 @@
 </head>
   <body>
     <div class="content-container">
+      <?php 
+        if (isset($_GET['submitted']) && $_GET['submitted'] == 1): 
+      ?>
+          <div style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border: 1px solid #c3e6cb;">
+            Form submitted successfully!
+          </div>
+      <?php 
+        endif;
+      ?>
+
       <!-- Step indicator -->
       <div class="step-indicator">
         <div class="step">1</div>
@@ -26,11 +36,16 @@
         <div class="step">4</div>
       </div>
       <!-- Step 1 -->
-    <form id="pds-form" enctype="multipart/form-data">
+    <h1 class="main-title">PERSONAL DATA SHEET</h1>
+    <form id="pds-form" action="pds-ajax.php" enctype="multipart/form-data" method="POST">
       <div class="form-step" id="step-1">
-        <h1 class="main-title">PERSONAL DATA SHEET</h1>
+        
+          <label class="photo-upload-wrapper" for="personnel-photo">
+            <span class="photo-upload-text">Upload photo</span>
+            <img id="preview" src="#" alt="Preview" style="display: none;" />
+          </label>
+          <input type="file" name="personnel-photo" id="personnel-photo" accept="image/*">
 
-        <input type="file" name="personnel-photo" id="personnel-photo">
 
         <h1 class="section-title">DATE EMPLOYED</h1>
         <div class="row">
@@ -40,15 +55,15 @@
         <h1 class="section-title">PERSONAL INFORMATION</h1>
         <div class="column-group">
           <div class="row">
-            <div class="col">Last Name<input type="text" name="personnel-lname" id="personnel-lname" class="input"></div>
-            <div class="col">First Name<input type="text" name="personnel-fname" id="personnel-fname" class="input" /></div>
+            <div class="col">Last Name<input type="text" name="personnel-lname" id="personnel-lname" class="input" required /></div>
+            <div class="col">First Name<input type="text" name="personnel-fname" id="personnel-fname" class="input" required /></div>
             <div class="col">Middle Name<input type="text" name="personnel-mname" id="personnel-mname" class="input" /></div>
-            <div class="col">Birthdate<input type="date" name="personnel-birthdate" id="personnel-birthdate" class="input" /></div>
-            <div class="col">Birthplace<input type="text" name="personnel-birthplace" id="personnel-birthplace" class="input" /></div>   
+            <div class="col">Birthdate<input type="date" name="personnel-birthdate" id="personnel-birthdate" class="input" required /></div>
+            <div class="col">Birthplace<input type="text" name="personnel-birthplace" id="personnel-birthplace" class="input" required /></div>   
           </div>
           <div class="row">
             <div class="col">Gender
-              <select class="dropdown" name="personnel-gender" id="personnel-gender">
+              <select class="dropdown" name="personnel-gender" id="personnel-gender" required>
                 <option disabled selected value=""></option>
                 <?php
                   $query2 = "SELECT * FROM gender ORDER BY (name != 'Male'), (name != 'Female'), name ASC";
@@ -65,7 +80,7 @@
               </select>
             </div>
             <div class="col">Civil Status
-              <select class="dropdown" name="personnel-civilstatus" id="personnel-civilstatus">
+              <select class="dropdown" name="personnel-civilstatus" id="personnel-civilstatus" required>
                 <option disabled selected value=""></option>
                 <?php
                   $query2 = "SELECT * FROM civilstatus";
@@ -82,7 +97,7 @@
               </select>
             </div>
             <div class="col">Nationality
-              <select class="dropdown" name="personnel-nationality" id="personnel-nationality">
+              <select class="dropdown" name="personnel-nationality" id="personnel-nationality" required>
                 <option disabled selected value=""></option>
                 <?php
                   $query1 = "SELECT * FROM nationalities_list ORDER BY (nationalities != 'Filipino'), nationalities ASC";
@@ -99,7 +114,7 @@
               </select>
             </div>
             <div class="col">Religion
-              <select class="dropdown" name="personnel-religion" id="personnel-religion">
+              <select class="dropdown" name="personnel-religion" id="personnel-religion" required>
                 <option disabled selected value=""></option>
                 <?php
                   $query = "SELECT * FROM religion ORDER BY (name != 'Roman Catholic'), name ASC";
@@ -134,7 +149,7 @@
           <div class="row">
             <div class="col">Landline Number<input type="text" name="personnel-telno" class="input" /></div>
             <div class="col">Mobile Number<input type="text" name="personnel-cellphoneno" class="input" /></div>
-            <div class="col">Email Address<input type="email" name="personnel-email" class="input"/></div>
+            <div class="col">Email Address<input type="text" name="personnel-email" class="input"/></div>
           </div>
           <div class="row">
             <div class="col">Address<input type="text" name="personnel-address" class="input"/></div>
@@ -147,28 +162,21 @@
         </div>
         <div class="btn-group">
           <button type="button" onclick="showStep(2)" class="btn1 next-btn">Next</button>
-
-          <div class="btn-group">
-          <button type="button" onclick="showStep(3)" class="btn prev-btn">Previous</button>
-          <button type="submit" class="btn submit-btn" >Submit</button>
-        </div>
-      </form>
         </div>
       </div>
       <!-- Step 2 -->
       <div class="form-step hidden" id="step-2">
-        <h1 class="main-title">PERSONAL DATA SHEET</h1>
         <div class="column-group">
           <h1 class="section-title">SPOUSE'S PROFILE <span style="font-style: italic; font-weight: normal; font-size: 15px;">(IF MARRIED)</span></h1>
           <div class="row">
-            <div class="col">Surname<input type="text" name="spouse_last_name" class="input" /></div>
-            <div class="col">First Name<input type="text" name="spouse_first_name" class="input" /></div>
-            <div class="col">Middle Name<input type="text" name="spouse_middle_name" class="input" /></div>
-            <div class="col">Address<input type="text" name="spouse_company_address" class="input" /></div>
+            <div class="col">Surname<input type="text" name="spouse-lname" id="spouse-lname" class="input" /></div>
+            <div class="col">First Name<input type="text" name="spouse-fname" id="spouse-fname" class="input" /></div>
+            <div class="col">Middle Name<input type="text" name="spouse-mname" id="spouse-mname" class="input" /></div>
+            <div class="col">Address<input type="text" name="spouse-address" id="spouse-address" class="input" /></div>
           </div>
           <div class="row">
-            <div class="col">Occupation<input type="text" name="spouse_occupation" class="input" /></div>
-            <div class="col">Company Name<input type="text" name="spouse_company_name" class="input" /></div>
+            <div class="col">Occupation<input type="text" name="spouse-occupation" id="spouse-occupation" class="input" /></div>
+            <div class="col">Company Name<input type="text" name="spouse-company" id="spouse-company" class="input" /></div>
           </div>
           <div class="row-addchild"><h1 class="section-title">CHILDREN <span style="font-style: italic; font-weight: normal; font-size: 15px;">(IF ANY)</span></h1><button type="button" class="open-addchild-modal" onclick="openModal()">+ ADD CHILD</button></div>
           <div class="row">
@@ -202,28 +210,28 @@
 
           <h1 class="section-title">FATHER'S PROFILE</h1>
           <div class="row">
-            <div class="col">Surname<input type="text" name="father_last_name" class="input" /></div>
-            <div class="col">First Name<input type="text" name="father_first_name" class="input" /></div>
-            <div class="col">Middle Name<input type="text" name="father_middle_name" class="input" /></div>
-            <div class="col">Birthplace<input type="text" name="father_place_of_birth" class="input" /></div>
+            <div class="col">Surname<input type="text" name="father-lname" id="father-lname" class="input" /></div>
+            <div class="col">First Name<input type="text" name="father-fname" id="father-fname" class="input" /></div>
+            <div class="col">Middle Name<input type="text" name="father-mname" id="father-mname" class="input" /></div>
+            <div class="col">Birthplace<input type="text" name="father-birthplace" id="father-birthplace" class="input" /></div>
           </div>
 
           <h1 class="section-title">MOTHER'S PROFILE</h1>
           <div class="row">
-            <div class="col">Surname<input type="text" name="mother_last_name" class="input" /></div>
-            <div class="col">First Name<input type="text" name="mother_first_name" class="input" /></div>
-            <div class="col">Middle Name<input type="text" name="mother_middle_name" class="input" /></div>
-            <div class="col">Birthplace<input type="text" name="mother_place_of_birth" class="input" /></div>
+            <div class="col">Surname<input type="text" name="mother-lname" id="mother-lname" class="input" /></div>
+            <div class="col">First Name<input type="text" name="mother-fname" id="mother-fname" class="input" /></div>
+            <div class="col">Middle Name<input type="text" name="mother-mname" id="mother-mname" class="input" /></div>
+            <div class="col">Birthplace<input type="text" name="mother-birthplace" id="mother-birthplace" class="input" /></div>
           </div>
         </div>
         <div class="btn-group">
           <button type="button" onclick="showStep(1)" class="btn prev-btn">Previous</button>
           <button type="button" onclick="showStep(3)" class="btn next-btn">Next</button>
         </div>
+        
       </div>
       <!-- Step 3 -->
       <div class="form-step hidden" id="step-3">
-        <h1 class="main-title">PERSONAL DATA SHEET</h1>
         <div class="column-group">
           <div class="row-addchild"><h1 class="section-title">EDUCATION</h1><button type="button" class="open-addchild-modal" onclick="openModalEducation()">+ ADD EDUCATION</button></div>
           <div class="row">
@@ -268,39 +276,29 @@
             <span class="close" onclick="closeModalEducation()">&times;</span>
             <div class="modal-header">ADD EDUCATION</div>
 
-            <label>Level</label>
-              <select class="educationInputs" name="bdt" id="educ-level">
-                <option disabled selected value=""></option>
-                <?php
-                  $query1 = "SELECT * FROM educationLevels ORDER BY id ASC";
-                  $result1 = mysqli_query($conn, $query1);
-
-                  if ($result1 && mysqli_num_rows($result1) > 0) {
-                      while ($row1 = mysqli_fetch_assoc($result1)) {
-                          echo "<option value='{$row1['id']}'>{$row1['educ']}</option>";
-                      }
-                  } else {
-                      echo "<option value=''>No education levels found</option>";
-                  }
-                ?>
+            <label for="educ-level">Level</label>
+              <select class="educationInputs" name="educlevel" id="educlevel">
+                <option value="" disabled selected></option>
+                <option value="Elementary">Elementary</option>
+                <option value="Secondary">Secondary</option>
+                <option value="Tertiary">Tertiary</option>
+                <option value="Post Graduate">Post Graduate</option>
               </select>
-
-            <input type="hidden" class="educationInputs" id="educ-level-hidden">
             
             <label>School/University</label>
-              <input type="text" class="educationInputs" id="educ-school">
+              <input type="text" class="educationInputs" id="educschool">
 
             <label>Years Attended</label>
-              <input type="text" class="educationInputs" id="educ-years">
+              <input type="text" class="educationInputs" id="educyears">
 
             <label>Degree Earned</label>
-              <input type="text" class="educationInputs" id="educ-degree">
+              <input type="text" class="educationInputs" id="educdegree">
 
             <label>Course/Credit Units</label>
-              <input type="text" class="educationInputs" id="educ-units">
+              <input type="text" class="educationInputs" id="educunits">
 
             <label>Awards</label>
-              <input type="text" class="educationInputs" id="educ-awards">
+              <input type="text" class="educationInputs" id="educawards">
 
             <div class="modal-button">
               <button type="button" onclick="addEducation()">Add Education</button>
@@ -314,16 +312,16 @@
             <div class="modal-header">ADD WORK EXPERIENCE</div>
 
             <label>Agency</label>
-              <input type="text" class="educationInputs" id="work-agency">
+              <input type="text" class="educationInputs" id="workagency">
             
             <label>Position</label>
-              <input type="text" class="educationInputs" id="work-position">
+              <input type="text" class="educationInputs" id="workposition">
 
             <label>Inclusive Dates</label>
-              <input type="text" class="educationInputs" id="work-dates">
+              <input type="text" class="educationInputs" id="workdates">
 
             <label>Status of Appointment</label>
-              <input type="text" class="educationInputs" id="work-status">
+              <input type="text" class="educationInputs" id="workstatus">
 
             <div class="modal-button">
               <button type="button" onclick="addWork()">Add Work Experience</button>
@@ -338,7 +336,6 @@
       </div>
       <!-- Step 4 -->
       <div class="form-step hidden" id="step-4">
-        <h1 class="main-title">PERSONAL DATA SHEET</h1>
         <div class="column-group">
           <div class="row-addchild"><h1 class="section-title">CIVIL SERVICE ELIGIBILITY/PROFESSIONAL BOARD/COMPETENCY ASSESSMENT</h1><button type="button" class="open-addchild-modal" onclick="openModalQualification()">+ ADD QUALIFICATION</button></div>
           <div class="row">
@@ -378,10 +375,10 @@
 
           <h1 class="section-title">PERSON TO NOTIFY IN CASE OF EMERGENCY</h1>
           <div class="row">
-            <div class="col">Name<input type="text" name="mother_last_name" class="input" /></div>
-            <div class="col">Relationship<input type="text" name="mother_first_name" class="input" /></div>
-            <div class="col">Contact Number<input type="text" name="mother_middle_name" class="input" /></div>
-            <div class="col">Address<input type="text" name="mother_place_of_birth" class="input" /></div>
+            <div class="col">Name<input type="text" name="emergency-name" class="input" /></div>
+            <div class="col">Relationship<input type="text" name="emergency-relationship" class="input" /></div>
+            <div class="col">Contact Number<input type="text" name="emergency-number" class="input" /></div>
+            <div class="col">Address<input type="text" name="emergency-address" class="input" /></div>
           </div>
         </div>
 
@@ -391,16 +388,16 @@
             <div class="modal-header">ADD QUALIFICATION</div>
 
             <label>Name of Exam</label>
-              <input type="text" class="educationInputs" id="qualification-exam">
+              <input type="text" class="educationInputs" id="qualificationexam" />
             
             <label>Examination Date</label>
-              <input type="text" class="educationInputs" id="qualification-date">
+              <input type="text" class="educationInputs" id="qualificationdate" />
 
             <label>Rates</label>
-              <input type="text" class="educationInputs" id="qualification-rates">
+              <input type="text" class="educationInputs" id="qualificationrates" />
 
             <label>Place of Examination</label>
-              <input type="text" class="educationInputs" id="qualification-place">
+              <input type="text" class="educationInputs" id="qualificationplace" />
 
             <div class="modal-button">
               <button type="button" onclick="addQualification()">Add Qualification</button>
@@ -414,16 +411,16 @@
             <div class="modal-header">ADD TRAINING</div>
 
             <label>Seminar Title</label>
-              <input type="text" class="educationInputs" id="training-seminar">
+              <input type="text" class="educationInputs" id="trainingseminar" />
             
             <label>Inclusive Dates</label>
-              <input type="text" class="educationInputs" id="training-date">
+              <input type="text" class="educationInputs" id="trainingdate" />
 
             <label>No. of Hours</label>
-              <input type="text" class="educationInputs" id="training-hours">
+              <input type="text" class="educationInputs" id="traininghours" />
 
             <label>Conducted By</label>
-              <input type="text" class="educationInputs" id="training-conducted">
+              <input type="text" class="educationInputs" id="trainingconducted" />
 
             <div class="modal-button">
               <button type="button" onclick="addTraining()">Add Training</button>
@@ -431,19 +428,19 @@
           </div>
         </div>
 
-        <!-- <div class="btn-group">
+        <div class="btn-group">
           <button type="button" onclick="showStep(3)" class="btn prev-btn">Previous</button>
           <button type="submit" class="btn submit-btn">Submit</button>
         </div>
-      </form> -->
+      </form>
       </div>
 
       <div id="successModal" class="custom-modal">
         <div class="custom-modal-content">
-          <span class="close-button" onclick="closeModal()">&times;</span>
+          <span class="close-button" onclick="closeModality()">&times;</span>
           <h2>Success</h2>
           <p>Your personal data was submitted successfully.</p>
-          <button onclick="closeModal()">OK</button>
+          <button onclick="closeModality()">OK</button>
         </div>
       </div>
     </div>
@@ -452,58 +449,46 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
+  /* $(document).ready(function() {
     $('#pds-form').on('submit', function(e) {
       e.preventDefault(); // Prevent the default form submission
-      submitPersonalData(); // Call your AJAX function
-    });
-  });
+      var formData = new FormData($('#pds-form')[0]);
 
-  function submitPersonalData() {
-    var formData = new FormData($('#pds-form')[0]);
-
-    $.ajax({
-      url: 'pds-ajax.php',
-      type: 'POST',
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function(response) {
-        console.log("Server response:", response);
-
-        showModal();
-      },
-      error: function(xhr, status, error) {
-        console.error("AJAX Error:", status, error);
-      }
-    });
-  }
-
-
-  function showStep(step) { 
-    /* const currentStepIndex = step - 2; */
-    const steps = document.querySelectorAll('.form-step');
-
-    /* if (step > 1) {
-      const currentStep = steps[currentStepIndex];
-      const inputs = currentStep.querySelectorAll('input');
-
-      let allFilled = true;
-
-      inputs.forEach(input => {
-        if (input.type !== 'file' && input.value.trim() === '') {
-          input.classList.add('input-error');
-          allFilled = false;
-        } else {
-          input.classList.remove('input-error');
+      $.ajax({
+        url: 'pds-ajax.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          console.log("Response: ", response);
+          showModal();
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX Error:", status, error);
         }
       });
+    });
+  }); */
 
-      if (!allFilled) {
-        return;
-      }
-    } */
+  document.getElementById('personnel-photo').addEventListener('change', function(event) {
+    const preview = document.getElementById('preview');
+    const file = event.target.files[0];
 
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+
+  function showStep(step) { 
+    const steps = document.querySelectorAll('.form-step');
     steps.forEach((el, idx) => {
       el.classList.toggle('hidden', idx !== step - 1);
     });
@@ -541,12 +526,12 @@
 
   function closeModalEducation() {
     document.getElementById('educationModal').style.display = 'none';
-    document.getElementById('educ-level').value = '';
-    document.getElementById('educ-school').value = '';
-    document.getElementById('educ-years').value = '';
-    document.getElementById('educ-degree').value = '';
-    document.getElementById('educ-units').value = '';
-    document.getElementById('educ-awards').value = '';
+    document.getElementById('educlevel').value = '';
+    document.getElementById('educschool').value = '';
+    document.getElementById('educyears').value = '';
+    document.getElementById('educdegree').value = '';
+    document.getElementById('educunits').value = '';
+    document.getElementById('educawards').value = '';
   }
 
   function openModalWork() {
@@ -555,10 +540,10 @@
 
   function closeModalWork() {
     document.getElementById('workModal').style.display = 'none';
-    document.getElementById('work-agency').value = '';
-    document.getElementById('work-position').value = '';
-    document.getElementById('work-dates').value = '';
-    document.getElementById('work-status').value = '';
+    document.getElementById('workagency').value = '';
+    document.getElementById('workposition').value = '';
+    document.getElementById('workdates').value = '';
+    document.getElementById('workstatus').value = '';
   }
 
   function openModalQualification() {
@@ -567,10 +552,10 @@
 
   function closeModalQualification() {
     document.getElementById('qualificationModal').style.display = 'none';
-    document.getElementById('qualification-exam').value = '';
-    document.getElementById('qualification-date').value = '';
-    document.getElementById('qualification-rates').value = '';
-    document.getElementById('qualification-place').value = '';
+    document.getElementById('qualificationexam').value = '';
+    document.getElementById('qualificationdate').value = '';
+    document.getElementById('qualificationrates').value = '';
+    document.getElementById('qualificationplace').value = '';
   }
 
   function openModalTraining() {
@@ -579,10 +564,10 @@
 
   function closeModalTraining() {
     document.getElementById('trainingModal').style.display = 'none';
-    document.getElementById('training-seminar').value = '';
-    document.getElementById('training-date').value = '';
-    document.getElementById('training-hours').value = '';
-    document.getElementById('training-conducted').value = '';
+    document.getElementById('trainingseminar').value = '';
+    document.getElementById('trainingdate').value = '';
+    document.getElementById('traininghours').value = '';
+    document.getElementById('trainingconducted').value = '';
   }
 
   function addChild() {
@@ -603,8 +588,8 @@
     const ageCell = newRow.insertCell(1);
     const actionCell = newRow.insertCell(2);
 
-    nameCell.innerHTML = `<input type="text" name="children_name[]" value="${name}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    ageCell.innerHTML = `<input type="text" name="children_age[]" value="${age}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    nameCell.innerHTML = `<input type="text" name="children_name[]" id="child-name" value="${name}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    ageCell.innerHTML = `<input type="text" name="children_age[]" id="child-age" value="${age}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
     actionCell.innerHTML = `<button type="button" onclick="removeRow(this)" style="width: 100%; border: none; background-color: darkred; color: white; text-align: center;">Remove</button>`;
 
     // Clear and close modal
@@ -612,29 +597,24 @@
   }
 
   function addEducation() {
-    const levelInput = document.getElementById('educ-level');
-    const selectedLevel = levelInput.options[levelInput.selectedIndex].text;
-    const levelHiddenInput = document.getElementById('educ-level-hidden');
-    levelHiddenInput.value = selectedLevel;
-    const schoolInput = document.getElementById('educ-school');
-    const yearsInput = document.getElementById('educ-years');
-    const degreeInput = document.getElementById('educ-degree');
-    const unitsInput = document.getElementById('educ-units');
-    const awardsInput = document.getElementById('educ-awards');
+    const levelInput = document.getElementById('educlevel');
+    const schoolInput = document.getElementById('educschool');
+    const yearsInput = document.getElementById('educyears');
+    const degreeInput = document.getElementById('educdegree');
+    const unitsInput = document.getElementById('educunits');
+    const awardsInput = document.getElementById('educawards');
 
-    if (levelInput === "" || schoolInput === "" || yearsInput === "") {
-      alert("Please fill in the level, school and years attendeds.");
-      return;
-    }
-
-    console.log("Selected education level:", levelHiddenInput);
-
-    const level = levelHiddenInput.value.trim();
+    const level = levelInput.value.trim();
     const school = schoolInput.value.trim();
     const years = yearsInput.value.trim();
     const degree = degreeInput.value.trim();
     const units = unitsInput.value.trim();
     const awards = awardsInput.value.trim();
+
+    if (level === "" || school === "" || years === "") {
+      alert("Please fill in the level, school and years attended.");
+      return;
+    }
 
     const table = document.getElementById("educational-table").getElementsByTagName("tbody")[0];
     const newRow = table.insertRow();
@@ -647,12 +627,12 @@
     const awardsCell = newRow.insertCell(5);
     const actionCell = newRow.insertCell(6);
 
-    levelCell.innerHTML = `<input type="text" name="children_name[]" value="${level}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    schoolCell.innerHTML = `<input type="text" name="children_age[]" value="${school}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    yearsCell.innerHTML = `<input type="text" name="children_name[]" value="${years}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    degreeCell.innerHTML = `<input type="text" name="children_age[]" value="${degree}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    unitsCell.innerHTML = `<input type="text" name="children_name[]" value="${units}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    awardsCell.innerHTML = `<input type="text" name="children_age[]" value="${awards}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    levelCell.innerHTML = `<input type="text" name="educ_level[]" id="educ-level" value="${level}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    schoolCell.innerHTML = `<input type="text" name="educ_school[]" id="educ-school" value="${school}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    yearsCell.innerHTML = `<input type="text" name="educ_years[]" id="educ-years" value="${years}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    degreeCell.innerHTML = `<input type="text" name="educ_degree[]" id="educ-degree" value="${degree}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    unitsCell.innerHTML = `<input type="text" name="educ_units[]" id="educ-units" value="${units}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    awardsCell.innerHTML = `<input type="text" name="educ_awards[]" id="educ-awards" value="${awards}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
     actionCell.innerHTML = `<button type="button" onclick="removeEducationRow(this)" style="width: 100%; border: none; background-color: darkred; color: white; text-align: center;">Remove</button>`;
 
     // Clear and close modal
@@ -660,10 +640,10 @@
   }
 
   function addWork() {
-    const workAgency = document.getElementById("work-agency");
-    const workPosition = document.getElementById("work-position");
-    const workDates = document.getElementById("work-dates");
-    const workStatus = document.getElementById("work-status");
+    const workAgency = document.getElementById("workagency");
+    const workPosition = document.getElementById("workposition");
+    const workDates = document.getElementById("workdates");
+    const workStatus = document.getElementById("workstatus");
     const agency = workAgency.value.trim();
     const position = workPosition.value.trim();
     const dates = workDates.value.trim();
@@ -683,10 +663,10 @@
     const statusCell = newRow.insertCell(3);
     const actionCell = newRow.insertCell(4);
 
-    agencyCell.innerHTML = `<input type="text" name="children_name[]" value="${agency}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    positionCell.innerHTML = `<input type="text" name="children_age[]" value="${position}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    datesCell.innerHTML = `<input type="text" name="children_name[]" value="${dates}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    statusCell.innerHTML = `<input type="text" name="children_age[]" value="${status}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    agencyCell.innerHTML = `<input type="text" name="work_agency[]" id="work-agency" value="${agency}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    positionCell.innerHTML = `<input type="text" name="work_position[]" id="work-position" value="${position}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    datesCell.innerHTML = `<input type="text" name="work_dates[]" id="work-dates" value="${dates}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    statusCell.innerHTML = `<input type="text" name="work_status[]" id="work-status" value="${status}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
     actionCell.innerHTML = `<button type="button" onclick="removeWorkRow(this)" style="width: 100%; border: none; background-color: darkred; color: white; text-align: center;">Remove</button>`;
 
     // Clear and close modal
@@ -694,10 +674,10 @@
   }
 
   function addQualification() {
-    const qualificationExam = document.getElementById("qualification-exam");
-    const qualificationDate = document.getElementById("qualification-date");
-    const qualificationRates = document.getElementById("qualification-rates");
-    const qualificationPlace = document.getElementById("qualification-place");
+    const qualificationExam = document.getElementById("qualificationexam");
+    const qualificationDate = document.getElementById("qualificationdate");
+    const qualificationRates = document.getElementById("qualificationrates");
+    const qualificationPlace = document.getElementById("qualificationplace");
     const exam = qualificationExam.value.trim();
     const examdate = qualificationDate.value.trim();
     const rates = qualificationRates.value.trim();
@@ -717,10 +697,10 @@
     const placeCell = newRow.insertCell(3);
     const actionCell = newRow.insertCell(4);
 
-    examCell.innerHTML = `<input type="text" name="children_name[]" value="${exam}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    examdateCell.innerHTML = `<input type="text" name="children_age[]" value="${examdate}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    ratesCell.innerHTML = `<input type="text" name="children_name[]" value="${rates}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    placeCell.innerHTML = `<input type="text" name="children_age[]" value="${place}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    examCell.innerHTML = `<input type="text" name="qualification_exam[]" id="qualification-exam" value="${exam}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    examdateCell.innerHTML = `<input type="text" name="qualification_date[]" id="qualification-date" value="${examdate}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    ratesCell.innerHTML = `<input type="text" name="qualification_rates[]" id="qualification-rates" value="${rates}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    placeCell.innerHTML = `<input type="text" name="qualification_place[]" id="qualification-place" value="${place}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
     actionCell.innerHTML = `<button type="button" onclick="removeQualificationRow(this)" style="width: 100%; border: none; background-color: darkred; color: white; text-align: center;">Remove</button>`;
 
     // Clear and close modal
@@ -728,10 +708,10 @@
   }
 
   function addTraining() {
-    const trainingSeminar = document.getElementById("training-seminar");
-    const trainingDate = document.getElementById("training-date");
-    const trainingHours = document.getElementById("training-hours");
-    const trainingConducted = document.getElementById("training-conducted");
+    const trainingSeminar = document.getElementById("trainingseminar");
+    const trainingDate = document.getElementById("trainingdate");
+    const trainingHours = document.getElementById("traininghours");
+    const trainingConducted = document.getElementById("trainingconducted");
     const seminar = trainingSeminar.value.trim();
     const tdate = trainingDate.value.trim();
     const thours = trainingHours.value.trim();
@@ -751,10 +731,10 @@
     const conductedCell = newRow.insertCell(3);
     const actionCell = newRow.insertCell(4);
 
-    seminarCell.innerHTML = `<input type="text" name="children_name[]" value="${seminar}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    tdateCell.innerHTML = `<input type="text" name="children_age[]" value="${tdate}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    thoursCell.innerHTML = `<input type="text" name="children_name[]" value="${thours}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
-    conductedCell.innerHTML = `<input type="text" name="children_age[]" value="${conducted}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    seminarCell.innerHTML = `<input type="text" name="trainingseminar[]" id="training-seminar" value="${seminar}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    tdateCell.innerHTML = `<input type="text" name="trainingdate[]" id="training-date" value="${tdate}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    thoursCell.innerHTML = `<input type="text" name="traininghours[]" id="training-hours" value="${thours}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
+    conductedCell.innerHTML = `<input type="text" name="trainingconducted[]" id="training-conducted" value="${conducted}" style="width: 100%; border: none; background-color: transparent; text-align: center; padding: 0; margin: 0;" readonly />`;
     actionCell.innerHTML = `<button type="button" onclick="removeTrainingRow(this)" style="width: 100%; border: none; background-color: darkred; color: white; text-align: center;">Remove</button>`;
 
     // Clear and close modal
@@ -830,7 +810,7 @@
     document.getElementById('successModal').style.display = 'block';
   }
 
-  function closeModal() {
+  function closeModality() {
     document.getElementById('successModal').style.display = 'none';
   }
 

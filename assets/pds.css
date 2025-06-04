@@ -12,7 +12,7 @@
       border-radius: 16px;
       padding: 20px 32px 20px 32px;
       margin-bottom: 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07); */
     }
 
     .form-step:not(.hidden) {
@@ -46,9 +46,10 @@
     .main-title {
       font-size: 2.2rem;
       font-weight: bold;
-      text-align: left;
+      text-align: center;
       color: #222;
       margin: 0;
+      margin-top: 20px;
     }
 
     .step-title {
@@ -92,6 +93,13 @@
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
+    }
+
+    .row-1 {
+      width: 100%;
+      display: flex;
+      gap: 16px;
+      flex-direction: row;
     }
 
     .col {
@@ -269,10 +277,6 @@
       margin-top: 20px;
     }
 
-    #pds-form {
-      margin-top: 10px;
-    }
-
     .custom-modal {
       display: none; 
       position: fixed; 
@@ -431,5 +435,49 @@
         transform: scale(1);
       }
     }
+  .container {
+    display: flex;
+    justify-content:center; /* aligns the photo box to the right */
+    padding: 20px; /* optional, for spacing */
+  }
+
+  .photo-upload-wrapper {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    font-family: sans-serif;
+  }
+
+  .photo-upload-wrapper:hover {
+    border-color: #888;
+  }
+
+  .photo-upload-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .photo-upload-text {
+    z-index: 1;
+    color: #777;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  #personnel-photo {
+    display: none;
+  }
 
     
