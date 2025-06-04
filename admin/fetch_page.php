@@ -2,7 +2,7 @@
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
 
-    $allowed_pages = ['dashboard', 'pds', 'employee', 'certificate', 'employee-info'];
+    $allowed_pages = ['dashboard', 'pds', 'employee', 'certificate'];
 
     if (in_array($page, $allowed_pages)) {
         include "$page.php"; 
